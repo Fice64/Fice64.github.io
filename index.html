@@ -1,1 +1,84 @@
-<h1>Balatrumbo</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fice's Forest</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: white;
+
+      /* Default background */
+      background-image: url("images/bg1.jpg");
+      background-size: cover;
+      background-position: center;
+      transition: background-image 0.8s ease-in-out;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.5);
+      margin: 50px auto;
+      padding: 20px;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #a8ffd6;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #1f3d2b;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2f5c42;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Hey, I'm Fice 🌿</h1>
+
+    <p>
+      I'm an electrical engineering student who lives somewhere between circuits,
+      music, and imaginary worlds.
+    </p>
+
+    <p>
+      I love exploring ideas, building things, and turning random thoughts into
+      something real — whether it's code, art, or sound.
+    </p>
+
+    <button onclick="changeBackground()">Change the forest 🌲</button>
+  </div>
+
+  <script>
+    const backgrounds = [
+      "images/bg1.jpg",
+      "images/bg2.jpg",
+      "images/bg3.jpg"
+    ];
+
+    let current = 0;
+
+    function changeBackground() {
+      current = (current + 1) % backgrounds.length;
+      document.body.style.backgroundImage = "url('" + backgrounds[current] + "')";
+    }
+  </script>
+
+</body>
+</html>
