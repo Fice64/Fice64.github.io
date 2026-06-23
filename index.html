@@ -1,83 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>La guarida de Balatrumbo</title>
+    <meta charset="UTF-8">
+    <!-- This tag ensures the webpage scales beautifully on iPhones, iPads, and monitors without shrinking -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fice's Campsite</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: white;
+    <!-- GOOGLE FONTS IMPORT: This links your project to the fonts you picked so the browser can load them -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Cairo+Play:wght@400;700&family=Red+Rose:wght@400;700&display=swap" rel="stylesheet">
 
-      /* Default background */
-      background-image: url("images/bg1.jpg");
-      background-size: cover;
-      background-position: center;
-      transition: background-image 0.8s ease-in-out;
-    }
+    <style>
+        /* -------------------------------------------------------------
+           FUTURE-PROOF VARIABLES: Change these hex codes to completely
+           swap the color scheme of your entire website instantly!
+        ------------------------------------------------------------- */
+        :root {
+            --bg-global: #0b100d;       /* Super dark forest green for global background */
+            --bg-card: #231c18;         /* Rich dark brown for your central square container */
+            --color-heading: #da3f3f;   /* Vibrant crimson red for highlights */
+            --color-text: #f0e9df;      /* Warm sand/cream for comfortable reading */
+            --color-button-bg: #1a2a3a; /* Deep midnight blue for navigation buttons */
+            --color-accent: #8b5a2b;    /* Secondary brown highlight for subtle borders */
+            
+            /* Fonts assigned directly to variables for quick swapping */
+            --font-highlight: 'Red Rose', serif;
+            --font-body: 'Cairo', sans-serif;
+            --font-buttons: 'Cairo Play', sans-serif;
+        }
 
-    .container {
-      background: rgba(0, 0, 0, 0.5);
-      margin: 50px auto;
-      padding: 20px;
-      width: 80%;
-      max-width: 600px;
-      border-radius: 12px;
-      text-align: center;
-    }
+        /* RESET: Clears default browser spacing so your layout behaves predictably */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    h1 {
-      color: #a8ffd6;
-    }
+        /* THE BODY: Controls the overall background and centers your central square card */
+        body {
+            background-color: var(--bg-global);
+            font-family: var(--font-body);
+            color: var(--color-text);
+            min-height: 100vh; /* Takes up the full height of the viewport/screen */
+            display: flex;
+            justify-content: center; /* Centers content horizontally */
+            align-items: center;     /* Centers content vertically */
+            padding: 20px;
+        }
 
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      background-color: #1f3d2b;
-      color: white;
-      cursor: pointer;
-    }
+        /* THE CENTRAL CARD: This achieves your "square-ish index page" vision */
+        .campsite-container {
+            background-color: var(--bg-card);
+            width: 100%;
+            max-width: 550px; /* Limits width on desktop so it retains its square shape */
+            min-height: 550px; /* Sets a minimum height to anchor the square proportions */
+            border: 3px solid var(--color-accent);
+            border-radius: 12px; /* Smooths out the corners slightly */
+            padding: 40px 30px;
+            
+            /* Flexbox layout: stacks elements vertically and spaces them out nicely */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; 
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Adds a dark drop shadow for depth */
+        }
 
-    button:hover {
-      background-color: #2f5c42;
-    }
-  </style>
+        /* HEADER SECTION */
+        .main-title {
+            font-family: var(--font-highlight);
+            font-size: 2.5rem; /* Large highlight size */
+            color: var(--color-heading);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .description {
+            font-size: 1rem;
+            line-height: 1.5;
+            opacity: 0.9; /* Makes the text slightly softer than pure white */
+            margin-bottom: 30px;
+        }
+
+        /* COLUMN MENU: Stacks your navigation items vertically */
+        .column-menu {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* Creates a clean, uniform gap between every menu button */
+            margin-bottom: 30px;
+        }
+
+        /* THE MENU BUTTONS: Styled with Cairo Play */
+        .menu-btn {
+            font-family: var(--font-buttons);
+            font-size: 1.1rem;
+            color: var(--color-text);
+            background-color: var(--color-button-bg);
+            text-decoration: none; /* Removes the ugly default underline from links */
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 6px;
+            transition: all 0.2s ease-in-out; /* Makes hover animations silky smooth */
+            width: 100%;
+            display: block;
+        }
+
+        /* HOVER EFFECTS: Changes look when a user hovers on desktop or taps on mobile */
+        .menu-btn:hover {
+            border-color: var(--color-heading);
+            background-color: transparent;
+            transform: translateY(-2px); /* Lifts the button up slightly for tactile feedback */
+        }
+
+        /* FOOTER SOCIAL MEDIA LINKS: Arranged horizontally at the bottom */
+        .socials-footer {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .social-icon {
+            color: var(--color-text);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .social-icon:hover {
+            opacity: 1;
+            color: var(--color-heading);
+        }
+    </style>
 </head>
-
 <body>
 
-  <div class="container">
-    <h1>HHOLAAA</h1>
+    <!-- THE STRUCTURE -->
+    <main class="campsite-container">
+        
+        <!-- TOP SECTION: Branding and Lore Intro -->
+        <header>
+            <h1 class="main-title">Fice's Campsite</h1>
+            <p class="description">
+                Welcome to Fice & Friends' digital garden! Grab a seat by the fire. Here you'll find our personal wiki, chaotic quote archives, our custom version of Cards Against Humanity (CACOCEDE), and other structural updates to our group lore.
+            </p>
+        </header>
 
-    <p>
-      Ahora si mira como codifico
-    </p>
+        <!-- CENTER SECTION: The Column Menu. 
+             Change the href="#" to your actual file names later (e.g., href="about.html") -->
+        <nav class="column-menu">
+            <a href="#" class="menu-btn">About Me</a>
+            <a href="#" class="menu-btn">Group Timeline</a>
+            <a href="#" class="menu-btn">CACOCEDE</a>
+            <a href="#" class="menu-btn">Relationships</a>
+            <a href="#" class="menu-btn">Gallery & Museum</a>
+        </nav>
 
-    <p>
-      Salchipapas
-    </p>
+        <!-- BOTTOM SECTION: External Links -->
+        <footer class="socials-footer">
+            <a href="https://x.com" target="_blank" class="social-icon">𝕏</a>
+            <a href="https://instagram.com" target="_blank" class="social-icon">Instagram</a>
+            <a href="https://github.com" target="_blank" class="social-icon">GitHub</a>
+        </footer>
 
-    <button onclick="changeBackground()">Este boton no hace nada...</button>
-  </div>
-
-  <script>
-    const backgrounds = [
-      "images/bg1.jpg",
-      "images/bg2.jpg",
-      "images/bg3.jpg"
-    ];
-
-    let current = 0;
-
-    function changeBackground() {
-      current = (current + 1) % backgrounds.length;
-      document.body.style.backgroundImage = "url('" + backgrounds[current] + "')";
-    }
-  </script>
+    </main>
 
 </body>
 </html>
-
