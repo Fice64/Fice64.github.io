@@ -1,0 +1,56 @@
+/* GOOGLE FONTS IMPORT: Loaded globally once so all pages can use them */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Cairo+Play:wght@400;700&family=Red+Rose:wght@400;700&display=swap');
+
+/* GLOBAL VARIABLES: Your master color palette and typography rules */
+:root {
+        --bg-global: #324731;       /* Super dark forest green for global background */
+        --bg-card: #231c18;         /* Rich dark brown for your central square container */
+        --color-heading: #59502F;   /* Vibrant crimson red for highlights */
+        --color-text: #f0e9df;      /* Warm sand/cream for comfortable reading */
+        --color-button-bg: #365662; /* Deep midnight blue for navigation buttons */
+        --color-accent: #805A2C;    /* Secondary brown highlight for subtle borders */
+    
+    --font-highlight: 'Red Rose', serif;
+    --font-body: 'Cairo', sans-serif;
+    --font-buttons: 'Cairo Play', sans-serif;
+}
+
+/* RESET: Ensures uniform spacing across Safari, Chrome, and mobile browsers */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* BASIC PAGE SETUP: Every page will inherit this background and font automatically */
+body {
+    background-color: var(--bg-global);
+    font-family: var(--font-body);
+    color: var(--color-text);
+    min-height: 100vh;
+}
+
+/* THE FLOATING BACK-TO-HOME BUTTON 
+   This class will be used on all sub-pages to create the scrolling button */
+.back-home-btn {
+    position: fixed;       /* Anchors the button to the screen screen, ignoring scroll */
+    top: 20px;             /* 20 pixels down from the top edge */
+    left: 20px;            /* 20 pixels out from the left edge */
+    z-index: 9999;         /* High number ensures it floats ON TOP of all other text/images */
+    
+    font-family: var(--font-buttons);
+    font-size: 0.9rem;
+    color: var(--color-text);
+    background-color: var(--bg-card); /* Blends nicely with the palette */
+    text-decoration: none;
+    padding: 10px 16px;
+    border: 2px solid var(--color-accent);
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+.back-home-btn:hover {
+    border-color: var(--color-heading);
+    background-color: var(--color-button-bg);
+    transform: scale(1.05); /* Gives a tiny zoom effect when hovered/tapped */
+}
