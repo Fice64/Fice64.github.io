@@ -3,12 +3,12 @@
 
 /* GLOBAL VARIABLES: Your master color palette and typography rules */
 :root {
-        --bg-global: #324731;       /* Super dark forest green for global background */
-        --bg-card: #59502f;         /* Rich dark brown for your central square container */
-        --color-heading: #683131;   /* Vibrant crimson red for highlights */
+        --bg-global: #6D0030;       /* Dark red for global background */
+        --bg-card: #006C91;         /* Blue for your central square container */
+        --color-heading: #FFBC90;   /* cream orange for highlights */
         --color-text: #f0e9df;      /* Warm sand/cream for comfortable reading */
-        --color-button-bg: #365662; /* Deep midnight blue for navigation buttons */
-        --color-accent: #805A2C;    /* Secondary brown highlight for subtle borders */
+        --color-button-bg: #1E3B8F; /* Deep midnight blue for navigation buttons */
+        --color-accent: #231B2B;    /* Darker blue highlight for subtle borders */
     
     --font-highlight: 'Red Rose', serif;
     --font-body: 'Cairo', sans-serif;
