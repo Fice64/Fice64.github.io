@@ -79,6 +79,15 @@
             <a href="https://github.com" target="_blank" class="social-icon">GitHub</a>
         </footer>
     </main>
-
+<div class="mini-audio-player">
+    <div class="player-title">📻 Campsite Radio</div>
+    
+    <audio id="campsiteTrack" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+    
+    <div class="player-controls">
+        <button onclick="document.getElementById('campsiteTrack').play()" class="radio-btn">PLAY</button>
+        <button onclick="document.getElementById('campsiteTrack').pause()" class="radio-btn">PAUSE</button>
+    </div>
+</div>
 </body>
 </html>

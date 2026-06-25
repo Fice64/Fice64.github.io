@@ -54,3 +54,52 @@ body {
     background-color: var(--color-button-bg);
     transform: scale(1.05); /* Gives a tiny zoom effect when hovered/tapped */
 }
+
+/* THE FLOATING PLAYER CONTAINER */
+.mini-audio-player {
+    position: fixed;
+    bottom: 20px;          /* Pinned 20px from bottom edge */
+    right: 20px;           /* Pinned 20px from right edge */
+    background-color: var(--bg-card);
+    border: 2px solid var(--color-accent);
+    border-radius: 8px;
+    padding: 12px 16px;
+    width: 200px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    z-index: 10000;        /* Floating on top of everything else */
+    text-align: center;
+}
+
+.player-title {
+    font-family: var(--font-buttons);
+    font-size: 0.85rem;
+    color: var(--color-heading);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.player-controls {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+/* RETRO RADIO BUTTON STYLING */
+.radio-btn {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: var(--color-text);
+    background-color: var(--color-button-bg);
+    border: 1px solid var(--color-accent);
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.radio-btn:hover {
+    border-color: var(--color-heading);
+    background-color: rgba(218, 63, 63, 0.2);
+}
