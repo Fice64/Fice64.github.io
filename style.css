@@ -45,37 +45,39 @@
    ESTILOS DEL SELECTOR DE TEMAS (Esquina Superior Derecha)
    ========================================================================= */
 .theme-switcher {
-    position: fixed;
+    position: fixed;       /* Ancla el contenedor a la pantalla */
     top: 20px;
     right: 20px;
     display: flex;
-    gap: 10px;
-    background-color: var(--bg-card);
-    padding: 8px 12px;
-    border: 2px solid var(--color-accent);
-    border-radius: 20px;
-    z-index: 10000;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    transition: all 0.3s ease;
+    flex-direction: column; /* Apila los botones uno debajo del otro */
+    gap: 8px;              /* Espacio entre botones */
+    z-index: 10000;        /* Garantiza que esté por encima de todo */
 }
 
 .theme-btn {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 2px solid var(--color-text);
+    font-family: var(--font-buttons);
+    font-size: 0.9rem;     /* Ligeramente más pequeños que el menú central para no estorbar */
+    color: var(--color-text);
+    background-color: var(--color-button-bg);
+    padding: 10px 20px;
+    border: 2px solid var(--color-accent);
+    border-radius: 6px;
     cursor: pointer;
-    transition: transform 0.2s;
-    /* Color base del botón Vainilla */
-    background-color: #6D0030; 
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.theme-btn.forest-btn { background-color: #2C392A; }
-.theme-btn.neon-btn { background-color: #66FCF1; }
+/* Colores base para diferenciar los botones antes del click */
+.theme-btn.forest-btn { background-color: #3E2723; } /* Tono café del bosque */
+.theme-btn.neon-btn { background-color: #45A29E; }   /* Tono verde/cian del neón */
 
+/* Efecto hover idéntico al de tu menú principal */
 .theme-btn:hover {
-    transform: scale(1.2);
     border-color: var(--color-heading);
+    background-color: transparent;
+    transform: translateY(-2px);
 }
 
 /* =========================================================================
