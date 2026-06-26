@@ -1,28 +1,94 @@
-/* GOOGLE FONTS IMPORT: Loaded globally once so all pages can use them */
+/* =========================================================================
+   GOOGLE FONTS IMPORT
+   ========================================================================= */
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Cairo+Play:wght@400;700&family=Red+Rose:wght@400;700&display=swap');
 
-/* GLOBAL VARIABLES: Your master color palette and typography rules */
+/* =========================================================================
+   SISTEMA DE PALETAS DE COLORES (VARIABLES GLOBALES)
+   ========================================================================= */
+
+/* TEMA 1: DEFAULT (Tu diseño original) */
 :root {
-        --bg-global: #6D0030;       /* Dark red for global background */
-        --bg-card: #006C91;         /* Blue for your central square container */
-        --color-heading: #FFBC90;   /* cream orange for highlights */
-        --color-text: #f0e9df;      /* Warm sand/cream for comfortable reading */
-        --color-button-bg: #1E3B8F; /* Deep midnight blue for navigation buttons */
-        --color-accent: #231B2B;    /* Darker blue highlight for subtle borders */
+    --bg-global: #6D0030;       /* Dark red for global background */
+    --bg-card: #006C91;         /* Blue for your central square container */
+    --color-heading: #FFBC90;   /* Cream orange for highlights */
+    --color-text: #f0e9df;      /* Warm sand/cream for comfortable reading */
+    --color-button-bg: #1E3B8F; /* Deep midnight blue for navigation buttons */
+    --color-accent: #231B2B;    /* Darker blue highlight for subtle borders */
     
     --font-highlight: 'Red Rose', serif;
     --font-body: 'Cairo', sans-serif;
     --font-buttons: 'Cairo Play', sans-serif;
 }
 
-/* RESET: Ensures uniform spacing across Safari, Chrome, and mobile browsers */
+/* TEMA 2: BOSQUE (Vibra terrenal, naturaleza) */
+[data-theme="forest"] {
+    --bg-global: #2C392A;       /* Verde bosque profundo */
+    --bg-card: #4A5D23;         /* Verde musgo */
+    --color-heading: #E8D3B9;   /* Madera clara / Crema cálido */
+    --color-text: #F4EBE1;      /* Pergamino */
+    --color-button-bg: #3E2723; /* Café corteza oscuro */
+    --color-accent: #1B2117;    /* Sombra verde oscura */
+}
+
+/* TEMA 3: NEÓN / EDM (Vibra nocturna, alto contraste, cyberpunk) */
+[data-theme="neon"] {
+    --bg-global: #0B0C10;       /* Negro profundo casi vacío */
+    --bg-card: #1F2833;         /* Gris azulado oscuro */
+    --color-heading: #66FCF1;   /* Cian neón brillante */
+    --color-text: #C5C6C7;      /* Gris platinado legible */
+    --color-button-bg: #45A29E; /* Verde azulado apagado */
+    --color-accent: #F02D3A;    /* Fucsia/Rojo agresivo para los bordes */
+}
+
+/* =========================================================================
+   ESTILOS DEL SELECTOR DE TEMAS (Esquina Superior Derecha)
+   ========================================================================= */
+.theme-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    background-color: var(--bg-card);
+    padding: 8px 12px;
+    border: 2px solid var(--color-accent);
+    border-radius: 20px;
+    z-index: 10000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    transition: all 0.3s ease;
+}
+
+.theme-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--color-text);
+    cursor: pointer;
+    transition: transform 0.2s;
+    /* Color base del botón Vainilla */
+    background-color: #6D0030; 
+}
+
+.theme-btn.forest-btn { background-color: #2C392A; }
+.theme-btn.neon-btn { background-color: #66FCF1; }
+
+.theme-btn:hover {
+    transform: scale(1.2);
+    border-color: var(--color-heading);
+}
+
+/* =========================================================================
+   RESET Y CONFIGURACIÓN BÁSICA
+   ========================================================================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* La transición global hace que el cambio de color sea suave y fluido, no un salto brusco */
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
 }
 
-/* BASIC PAGE SETUP: Every page will inherit this background and font automatically */
 body {
     background-color: var(--bg-global);
     font-family: var(--font-body);
@@ -30,43 +96,47 @@ body {
     min-height: 100vh;
 }
 
-/* THE FLOATING BACK-TO-HOME BUTTON 
-   This class will be used on all sub-pages to create the scrolling button */
+/* =========================================================================
+   COMPONENTES UI GLOBALES
+   ========================================================================= */
+
+/* THE FLOATING BACK-TO-HOME BUTTON */
 .back-home-btn {
-    position: fixed;       /* Anchors the button to the screen screen, ignoring scroll */
-    top: 20px;             /* 20 pixels down from the top edge */
-    left: 20px;            /* 20 pixels out from the left edge */
-    z-index: 9999;         /* High number ensures it floats ON TOP of all other text/images */
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
     
     font-family: var(--font-buttons);
     font-size: 0.9rem;
     color: var(--color-text);
-    background-color: var(--bg-card); /* Blends nicely with the palette */
+    background-color: var(--bg-card);
     text-decoration: none;
     padding: 10px 16px;
     border: 2px solid var(--color-accent);
     border-radius: 6px;
-    transition: all 0.2s ease-in-out;
+    /* Aquí anulamos la transición global solo para el hover para que sea rápido */
+    transition: all 0.2s ease-in-out; 
 }
 
 .back-home-btn:hover {
     border-color: var(--color-heading);
     background-color: var(--color-button-bg);
-    transform: scale(1.05); /* Gives a tiny zoom effect when hovered/tapped */
+    transform: scale(1.05);
 }
 
 /* THE FLOATING PLAYER CONTAINER */
 .mini-audio-player {
     position: fixed;
-    bottom: 20px;          /* Pinned 20px from bottom edge */
-    right: 20px;           /* Pinned 20px from right edge */
+    bottom: 20px;
+    right: 20px;
     background-color: var(--bg-card);
     border: 2px solid var(--color-accent);
     border-radius: 8px;
     padding: 12px 16px;
     width: 200px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-    z-index: 10000;        /* Floating on top of everything else */
+    z-index: 10000;
     text-align: center;
 }
 

@@ -56,7 +56,25 @@
     </style>
 </head>
 <body>
+<div class="theme-switcher">
+        <button class="theme-btn" onclick="setTheme('default')" title="Original"></button>
+        <button class="theme-btn forest-btn" onclick="setTheme('forest')" title="Bosque"></button>
+        <button class="theme-btn neon-btn" onclick="setTheme('neon')" title="Neón"></button>
+    </div>
 
+    <script>
+        // Función que cambia el tema y lo guarda en el navegador
+        function setTheme(themeName) {
+            // Cambia el atributo en la raíz del documento
+            document.documentElement.setAttribute('data-theme', themeName);
+            // Guarda la preferencia en el LocalStorage para que al cambiar de página no se reinicie
+            localStorage.setItem('fice-theme', themeName);
+        }
+
+        // Cuando la página carga, revisamos si el usuario ya había elegido un tema antes
+        const savedTheme = localStorage.getItem('fice-theme') || 'default';
+        setTheme(savedTheme);
+    </script>
     <main class="campsite-container">
         <header>
             <h1 class="main-title">Fice's Campsite</h1>
