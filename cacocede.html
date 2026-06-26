@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CaCoCeDe - Fice's Campsite</title>
+    <title>CaCoCeDe - Parodia</title>
     
     <link rel="stylesheet" href="style.css">
 
     <style>
+        /* La arquitectura de columnas y diseño responsivo se mantiene intacta */
         .cacocede-wrapper {
-            max-width: 1100px; /* Wider container to comfortably fit columns side-by-side */
+            max-width: 1100px;
             margin: 0 auto;
             padding: 100px 20px 40px 20px;
         }
@@ -26,7 +27,6 @@
             margin-bottom: 10px;
         }
 
-        /* SEARCH BAR SYSTEM */
         .search-container {
             max-width: 500px;
             margin: 0 auto 40px auto;
@@ -45,15 +45,13 @@
             transition: border-color 0.2s;
         }
 
-        /* Glow effect when someone clicks/taps into the search input */
         .search-bar:focus {
             border-color: var(--color-heading);
         }
 
-        /* MATRIX GRID: Splits layout into 2 main structural columns (Black vs White) */
         .card-matrix {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Equal split layout on desktop screens */
+            grid-template-columns: 1fr 1fr;
             gap: 30px;
             align-items: start;
         }
@@ -74,11 +72,9 @@
             border-bottom: 2px solid var(--color-accent);
         }
         
-        /* Individual column styling highlights */
         .black-column .column-title { color: #ffffff; }
         .white-column .column-title { color: var(--color-heading); }
 
-        /* THE CARD DROPDOWN COMPONENT (<details>) */
         .cah-card {
             background-color: var(--bg-card);
             border: 2px solid var(--color-accent);
@@ -88,30 +84,26 @@
             transition: transform 0.2s, border-color 0.2s;
         }
 
-        /* The master anchor click-zone of the dropdown */
         .cah-card summary {
             padding: 20px;
             font-family: var(--font-body);
             font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
-            list-style: none; /* Hides default boring browser arrow indicator */
+            list-style: none;
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
 
-        /* Custom style variants to simulate real CAH card identities */
         .card-is-black { background-color: #000000; color: #ffffff; border-color: #333333; }
         .card-is-white { background-color: #ffffff; color: #000000; border-color: #dddddd; }
 
-        /* HOVER TACTILE VISUAL EFFECTS */
         .cah-card:hover {
             transform: translateY(-2px);
             border-color: var(--color-heading);
         }
 
-        /* LORE WRAPPER CONTAINER: Opened dynamically when dropdown unfolds */
         .card-lore {
             padding: 15px 20px;
             background-color: rgba(0, 0, 0, 0.4);
@@ -121,22 +113,19 @@
             color: var(--color-text);
         }
         
-        /* Keeps text legible if inside a white card layout drop block */
         .card-is-white .card-lore {
             background-color: #f7f3ed;
             color: #231c18;
         }
 
-        /* IMAGE HOUSING WITHIN CARDS */
         .card-media {
             max-width: 100%;
             max-height: 200px;
-            object-fit: contain; /* Keeps image proportions scaling without stretching */
+            object-fit: contain;
             border-radius: 4px;
             margin-top: 5px;
         }
 
-        /* MOBILE RESPONSIVE ADAPTATION: Collapses columns into a single vertical layout */
         @media (max-width: 768px) {
             .card-matrix {
                 grid-template-columns: 1fr;
@@ -152,106 +141,134 @@
         
         <div class="header-section">
             <h1 class="page-title">CaCoCeDe</h1>
-            <p>Our completely unhinged local edition of Cards Against Humanity.</p>
+            <p>Nuestra edición local y completamente desquiciada.</p>
         </div>
 
         <div class="search-container">
-            <input type="text" id="cardSearch" class="search-bar" placeholder="🔍 Search cards by text or keyword...">
+            <input type="text" id="cardSearch" class="search-bar" placeholder="🔍 Buscar cartas por texto, lore o palabras clave...">
         </div>
 
         <div class="card-matrix">
-            
             <section class="matrix-column black-column">
-                <h2 class="column-title">Black Cards</h2>
+                <h2 class="column-title">Cartas Negras</h2>
                 <div id="blackCardsContainer"></div>
             </section>
 
             <section class="matrix-column white-column">
-                <h2 class="column-title">White Cards</h2>
+                <h2 class="column-title">Cartas Blancas</h2>
                 <div id="whiteCardsContainer"></div>
             </section>
-
         </div>
 
     </main>
 
     <script>
-        /* -------------------------------------------------------------
-           THE DATABASE ARRAY: Add all your new cards directly right here!
-        ------------------------------------------------------------- */
+        /* =========================================================================
+           🛠️ LA PLANTILLA DE BACKEND (BASE DE DATOS LOCAL)
+           =========================================================================
+           Para añadir una nueva carta, simplemente copia el siguiente bloque y
+           pégalo dentro del arreglo 'cardsData' separado por una coma:
+           
+           {
+               text: "El texto principal que va en la carta.",
+               lore: "Contexto gracioso o historia detrás de la carta (se ve al desplegar).",
+               type: "black",  // Escribe "black" para carta negra, o "white" para blanca.
+               isImage: false, // Escribe true si la carta es una imagen, false si es solo texto.
+               imageUrl: ""    // Si isImage es true, pon la ruta aquí (ej. "images/meme.webp"). Si es false, déjalo vacío.
+           },
+           ========================================================================= */
+
         const cardsData = [
             {
-                text: "Why did the Discord server go silent at 3:00 AM?",
-                lore: "This card commemorates the fateful night where everyone concurrently suffered a mental crash during a gaming marathon.",
+                text: "¿Cuál es el verdadero motivo por el que los servidores de la Universidad de Antioquia se caen en época de matrículas?",
+                lore: "La leyenda cuenta que no es el exceso de tráfico, sino un experimento fallido de Ingeniería Electrónica en el sótano.",
                 type: "black",
                 isImage: false,
                 imageUrl: ""
             },
             {
-                text: "An absolute technical catastrophe on the university server.",
-                lore: " Tomas's favorite excuse whenever code refuses to build on deployment tracking tests.",
+                text: "Un lobo-mapache de pelaje café intentando instalar software de Windows en una Mac usando Crossover.",
+                lore: "Representación gráfica de Fice Earthwing negándose a abandonar el ecosistema de Apple pero necesitando jugar o trabajar en algo muy específico. La persistencia es clave.",
                 type: "white",
                 isImage: false,
                 imageUrl: ""
             },
             {
-                text: "Look at this absolutely cursed frame.",
-                lore: "A card explicitly meant for dropping visual chat history elements or ridiculous screenshot anomalies.",
+                text: "Abandonar un dibujo digital a la mitad porque la anatomía es 'muy difícil' y proceder a intentar pasar el nivel más difícil de Celeste.",
+                lore: "Esa necesidad imperiosa de cambiar una frustración artística por una frustración de plataformas precisas. Al final, la perseverancia muscular siempre gana.",
                 type: "white",
-                isImage: true,
-                imageUrl: "https://placehold.co/400x200?text=Cursed+Meme+Placeholder" /* Replace with your actual file path later like: images/meme.webp */
+                isImage: false,
+                imageUrl: ""
             },
             {
-                text: "Carta de prueba.",
-                lore: "Uy que gracioso contexto",
-                type: "white", // Write "black" or "white"
-                isImage: false, // Write true if it displays an image asset instead
-            imageUrl: "" // Put "images/yourfile.webp" if isImage is true
+                text: "El arma secreta que V1 usará en la próxima actualización de Ultrakill es impulsada enteramente por ________.",
+                lore: "Imagina las posibilidades mecánicas. Todo se trata de la gestión de inercia y transferencia de energía, conceptos fundamentales si lo piensas bien.",
+                type: "black",
+                isImage: false,
+                imageUrl: ""
             },
+            {
+                text: "Un beat de Drum & Bass a 174 BPM hecho exclusivamente con sonidos de martillos construyendo props de cosplay.",
+                lore: "Cuando la producción musical en Logic Pro y la creación de réplicas de armas de Valorant chocan en un solo proyecto caótico con vibra de música electrónica.",
+                type: "white",
+                isImage: false,
+                imageUrl: ""
+            },
+            {
+                text: "Mirar una película como 'Whiplash' o 'A Silent Voice' a las 3 AM y decidir repentinamente cambiar de carrera.",
+                lore: "Ese momento donde la narrativa cinematográfica golpea tan fuerte que te cuestionas toda tu estructura de vida, al menos hasta que amanece.",
+                type: "white",
+                isImage: false,
+                imageUrl: ""
+            }
         ];
 
-        /* DOM HOOKS: Links code execution directly to the HTML target containers */
+        /* =========================================================================
+           ⚙️ EL MOTOR DE RENDERIZADO Y BÚSQUEDA
+           ========================================================================= */
+
+        // 1. Enganchamos los contenedores del HTML al JavaScript
         const blackContainer = document.getElementById("blackCardsContainer");
         const whiteContainer = document.getElementById("whiteCardsContainer");
         const searchBar = document.getElementById("cardSearch");
 
-        /* THE ASSEMBLY LINE FUNCTION: Takes an item from our database and compiles it into HTML elements */
+        // Función auxiliar: Elimina tildes y caracteres especiales de un texto.
+        // Esto permite que si el usuario busca "electronica", el sistema encuentre "electrónica".
+        function normalizeText(text) {
+            return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        }
+
+        // 2. La fábrica de cartas: Toma los datos y construye los elementos HTML (DOM)
         function renderCards(filteredData) {
-            // Clear out current items inside the column blocks before redrawing
+            // Limpiamos los contenedores antes de dibujar para no duplicar cartas
             blackContainer.innerHTML = "";
             whiteContainer.innerHTML = "";
 
             filteredData.forEach(card => {
-                // Step 1: Initialize the master <details> element
+                // Creamos el contenedor principal desplegable <details>
                 const detailsElement = document.createElement("details");
-                
-                // Assign unique stylistic identities based on data states
-                if (card.type === "black") {
-                    detailsElement.className = "cah-card card-is-black";
-                } else {
-                    detailsElement.className = "cah-card card-is-white";
-                }
+                detailsElement.className = card.type === "black" ? "cah-card card-is-black" : "cah-card card-is-white";
 
-                // Step 2: Build out the clickable header (<summary>) block
+                // Construimos la cabecera visible de la carta <summary>
                 const summaryElement = document.createElement("summary");
                 
-                // If it is an image card, inject text AND an image tag layout setup
+                // Lógica condicional: ¿Es texto puro o incluye imagen?
                 if (card.isImage) {
                     summaryElement.innerHTML = `<span>${card.text}</span><img src="${card.imageUrl}" class="card-media" alt="Card Graphic">`;
                 } else {
                     summaryElement.innerHTML = `<span>${card.text}</span>`;
                 }
 
-                // Step 3: Compile the dropdown body containing the specific lore
+                // Construimos el contenedor de Lore (lo que se esconde adentro)
                 const loreElement = document.createElement("div");
                 loreElement.className = "card-lore";
                 loreElement.innerHTML = `<strong>Lore Log:</strong> ${card.lore}`;
 
-                // Step 4: Structurally nest components inside the main details box
+                // Ensamblamos las piezas: metemos el título y el lore dentro del <details>
                 detailsElement.appendChild(summaryElement);
                 detailsElement.appendChild(loreElement);
 
-                // Step 5: Route the finished component to its respective column layout lane
+                // Clasificamos y enviamos a la columna correspondiente
                 if (card.type === "black") {
                     blackContainer.appendChild(detailsElement);
                 } else {
@@ -260,20 +277,25 @@
             });
         }
 
-        /* INTERACTIVE SEARCH ENGINE FILTER LOGIC */
+        // 3. El Sistema de Búsqueda (Filtro en tiempo real)
         searchBar.addEventListener("input", (event) => {
-            const searchTerm = event.target.value.toLowerCase();
+            // Obtenemos lo que el usuario escribió y lo normalizamos (sin tildes, minúsculas)
+            const searchTerm = normalizeText(event.target.value);
 
-            // Filters array to only preserve rows where data text matches search keywords
+            // Filtramos el arreglo de datos original
             const filteredCards = cardsData.filter(card => {
-                return card.text.toLowerCase().includes(searchTerm) || card.lore.toLowerCase().includes(searchTerm);
+                const normalizedText = normalizeText(card.text);
+                const normalizedLore = normalizeText(card.lore);
+                
+                // Si el texto de búsqueda está incluido en el título de la carta O en el lore, sobrevive al filtro.
+                return normalizedText.includes(searchTerm) || normalizedLore.includes(searchTerm);
             });
 
-            // Refresh column views using the filtered subset array items
+            // Volvemos a dibujar las cartas, pero esta vez solo pasamos el arreglo filtrado
             renderCards(filteredCards);
         });
 
-        // PRIMARY SYSTEM INIT: Runs once when page loads to pull data list items instantly
+        // 4. Inicialización: Dibujar todas las cartas por defecto cuando la página carga
         renderCards(cardsData);
     </script>
 </body>
