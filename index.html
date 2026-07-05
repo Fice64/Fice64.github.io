@@ -1,111 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fice's Campsite</title>
-
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-        /* This tiny page-specific block keeps your index page perfectly centered */
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .campsite-container {
-            background-color: var(--bg-card);
-            width: 100%;
-            max-width: 550px;
-            min-height: 550px;
-            border: 3px solid var(--color-accent);
-            border-radius: 12px;
-            padding: 40px 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; 
-            align-items: center;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .main-title { font-family: var(--font-highlight); font-size: 2.5rem; color: var(--color-heading); margin-bottom: 10px; }
-        .description { font-size: 1rem; line-height: 1.5; opacity: 0.9; margin-bottom: 30px; }
-        .column-menu { width: 100%; display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
-        
-        .menu-btn {
-            font-family: var(--font-buttons);
-            font-size: 1.1rem;
-            color: var(--color-text);
-            background-color: var(--color-button-bg);
-            text-decoration: none;
-            padding: 12px 20px;
-            border: 2px solid transparent;
-            border-radius: 6px;
-            transition: all 0.2s ease-in-out;
-            width: 100%;
-            display: block;
-        }
-        .menu-btn:hover { border-color: var(--color-heading); background-color: transparent; transform: translateY(-2px); }
-        .socials-footer { display: flex; gap: 20px; justify-content: center; }
-        .social-icon { color: var(--color-text); text-decoration: none; opacity: 0.7; transition: all 0.2s; }
-        .social-icon:hover { opacity: 1; color: var(--color-heading); }
-    </style>
+    <link rel="stylesheet" href="blueprints.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&family=Cairo+Play:wght@400;700&family=Red+Rose:wght@500;700&display=swap" rel="stylesheet">
 </head>
-  <body>
-    <div class="theme-switcher">
-        <button class="theme-btn" onclick="setTheme('default')">Vainilla</button>
-        <button class="theme-btn forest-btn" onclick="setTheme('forest')">Bosque</button>
-        <button class="theme-btn neon-btn" onclick="setTheme('neon')">Neón</button>
+<body>
+
+    <div class="background-gif-overlay"></div>
+
+    <div class="campsite-container">
+        
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-brand">
+                    <h2>Fice's Space</h2>
+                </div>
+                
+                <nav class="menu-tabs">
+                    <ul>
+                        <li><a href="#" class="menu-link active" data-target="about">About</a></li>
+                        <li><a href="#" class="menu-link" data-target="cacocede">Cacocede</a></li>
+                        <li><a href="#" class="menu-link" data-target="gallery">Gallery</a></li>
+<!--                    <li><a href="#" class="menu-link" data-target="timeline">Timeline</a></li> -->
+<!--                    <li><a href="#" class="menu-link" data-target="relationships">Relationships</a></li> -->
+                    </ul>
+                </nav>
+            </div>
+            
+            <div class="music-widget-placeholder">
+                <span class="widget-icon">📻</span>
+                <p>Radio Campsite</p>
+                <span class="subtext">Sintonizador analógico</span>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <div id="dynamic-tab-content">
+                </div>
+
+            <footer class="social-networks">
+                <div class="social-emoji-row">
+                    <a href="https://github.com" target="_blank" class="social-emoji-link" title="GitHub">🐙</a>
+                    <a href="https://discord.com" target="_blank" class="social-emoji-link" title="Discord">💬</a>
+                    <a href="https://spotify.com" target="_blank" class="social-emoji-link" title="Spotify">🎧</a>
+                    <a href="https://soundcloud.com" target="_blank" class="social-emoji-link" title="SoundCloud">☁️</a>
+                    <a href="https://instagram.com" target="_blank" class="social-emoji-link" title="Instagram">📸</a>
+                    <a href="https://youtube.com" target="_blank" class="social-emoji-link" title="YouTube">📺</a>
+                    <a href="https://linkedin.com" target="_blank" class="social-emoji-link" title="LinkedIn">💼</a>
+                    <a href="https://twitter.com" target="_blank" class="social-emoji-link" title="Twitter / X">🐦</a>
+                    <a href="mailto:tu-correo@example.com" class="social-emoji-link" title="Correo Electrónico">📬</a>
+                    <a href="https://twitch.tv" target="_blank" class="social-emoji-link" title="Twitch">👾</a>
+                    <a href="#" class="social-emoji-link" title="Portafolio / CV">📝</a>
+                    <a href="https://www.udea.edu.co" target="_blank" class="social-emoji-link" title="Universidad de Antioquia">🎓</a>
+                </div>
+            </footer>
+        </main>
+
     </div>
 
-    <script>
-        // Función que cambia el tema y lo guarda en el navegador
-        function setTheme(themeName) {
-            // Cambia el atributo en la raíz del documento
-            document.documentElement.setAttribute('data-theme', themeName);
-            // Guarda la preferencia en el LocalStorage para que al cambiar de página no se reinicie
-            localStorage.setItem('fice-theme', themeName);
-        }
-
-        // Cuando la página carga, revisamos si el usuario ya había elegido un tema antes
-        const savedTheme = localStorage.getItem('fice-theme') || 'default';
-        setTheme(savedTheme);
-    </script>
-    <main class="campsite-container">
-        <header>
-            <h1 class="main-title">Fice's Campsite</h1>
-            <p class="description">
-                Welcome to Fice & Friends' digital garden! Here you'll find our personal wiki, chaotic quote archives, and other structural updates to our group lore.
-            </p>
-        </header>
-
-        <nav class="column-menu">
-            <a href="about.html" class="menu-btn">About Me</a>
-            <a href="timeline.html" class="menu-btn">Group Timeline</a>
-            <a href="cacocede.html" class="menu-btn">CACOCEDE</a>
-            <a href="relationships.html" class="menu-btn">Relationships</a>
-            <a href="gallery.html" class="menu-btn">Gallery & Museum</a>
-        </nav>
-
-        <footer class="socials-footer">
-            <a href="https://x.com" target="_blank" class="social-icon">𝕏</a>
-            <a href="https://instagram.com" target="_blank" class="social-icon">Instagram</a>
-            <a href="https://github.com" target="_blank" class="social-icon">GitHub</a>
-        </footer>
-    </main>
-<div class="mini-audio-player">
-    <div class="player-title">📻 Campsite Radio</div>
-    
-    <audio id="campsiteTrack" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-    
-    <div class="player-controls">
-        <button onclick="document.getElementById('campsiteTrack').play()" class="radio-btn">PLAY</button>
-        <button onclick="document.getElementById('campsiteTrack').pause()" class="radio-btn">PAUSE</button>
-    </div>
-</div>
+    <script src="synergy.js" defer></script>
 </body>
 </html>
