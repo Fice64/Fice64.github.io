@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Configuración del Listener del menú de navegación
+    // Configuración del Listener del menú de navegacion
     menuLinks.forEach(link => {
         link.addEventListener("click", (e) => {
             e.preventDefault();
