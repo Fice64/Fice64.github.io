@@ -5,44 +5,179 @@ document.addEventListener("DOMContentLoaded", () => {
     const menuLinks = document.querySelectorAll(".menu-link");
     const container = document.getElementById("dynamic-tab-content");
 
-    /**
-     * Función asíncrona encargada de la carga dinámica de componentes HTML
-     * @param {string} tabName - Nombre de la pestaña a cargar (corresponde al nombre de archivo)
-     */
+    // --- SPLASH TEXT POOLS (MINECRAFT STYLE) ---
+    const leftSplashPool = [
+        "burp",
+        "meow",
+        "bwoof",
+        "squeak",
+        "honk",
+        "rawr",
+        "beep boop",
+        "mew",
+        "awooo",
+        "pico",
+        "gasp",
+        "snort"
+    ];
+
+    const rightSplashPool = [
+        "i am a big fat chud",
+        "puppy pilled day x",
+        "do cows dream?",
+        "baby vs nuclear bomb",
+        "brain empty, no thoughts",
+        "cower before the campsite",
+        "i forgot why i entered this room",
+        "procrastinating in 4k",
+        "the rot consumes",
+        "powered by cold pizza",
+        "who let me code this",
+        "100% certified silly"
+    ];
+
+    const sidebar = document.querySelector(".sidebar");
+    const mainContent = document.querySelector(".main-content");
+
+    function getRandomItem(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+
+    function randomizeBadges() {
+        if (sidebar) sidebar.setAttribute("data-badge", getRandomItem(leftSplashPool));
+        if (mainContent) mainContent.setAttribute("data-badge", getRandomItem(rightSplashPool));
+    }
+
+    // İlk splash metinlerini yükle
+    randomizeBadges();
+
+    // --- PALETTE RANDOMIZER & TRANSITION GIF LOGIC ---
+    const GIF_URL = "https://cdn.discordapp.com/attachments/1090677133342416966/1555762551583674488/image0.gif?ex=6ad0dd88&is=6acf8c08&hm=735b213c4c6d75644e10887f2eb6f90c7ebd3d4ee6821334fdbf0b9239d5d189";
+
+    const randomBtn = document.getElementById("random-theme-btn");
+    const gifOverlay = document.getElementById("gif-overlay");
+    const gifImg = document.getElementById("transition-gif");
+
+    function generateRandomPalette() {
+        const hue = Math.floor(Math.random() * 360);
+        const accentHue = (hue + 120 + Math.floor(Math.random() * 120)) % 360;
+
+        return {
+            "--color-bg": `hsl(${hue}, 40%, 4%)`,
+            "--color-panel-bg": `hsl(${hue}, 35%, 10%)`,
+            "--color-sub-panel": `hsl(${hue}, 30%, 15%)`,
+            "--color-border": `hsl(${hue}, 25%, 22%)`,
+            "--color-accent": `hsl(${accentHue}, 70%, 50%)`,
+            "--color-text-title": `hsl(${accentHue}, 50%, 70%)`,
+            "--color-text-body": `hsl(${hue}, 10%, 60%)`
+        };
+    }
+
+    function applyPalette(palette) {
+        const root = document.documentElement;
+        for (const [key, value] of Object.entries(palette)) {
+            root.style.setProperty(key, value);
+        }
+    }
+
+    if (randomBtn && gifOverlay && gifImg) {
+        randomBtn.addEventListener("click", () => {
+            gifImg.src = `${GIF_URL}&t=${Date.now()}`;
+            gifOverlay.classList.add("active");
+
+            setTimeout(() => {
+                const newPalette = generateRandomPalette();
+                applyPalette(newPalette);
+                randomizeBadges();
+            }, 800);
+
+            setTimeout(() => {
+                gifOverlay.classList.remove("active");
+            }, 1500);
+        });
+    }
+
+    // --- LAST.FM INTEGRATION ---
+    const LASTFM_USERNAME = "Fice64";
+    const LASTFM_API_KEY = "dbb6dfc446c31cc2ea125f5ac3672e65";
+
+    const trackNameEl = document.getElementById("track-name");
+    const artistNameEl = document.getElementById("artist-name");
+    const musicStatusEl = document.getElementById("music-status");
+    const albumCoverEl = document.getElementById("album-cover");
+
+    async function fetchLastFmTrack() {
+        try {
+            const url = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${LASTFM_USERNAME}&api_key=${LASTFM_API_KEY}&format=json&limit=1`;
+            const res = await fetch(url);
+            const data = await res.json();
+
+            if (data.recenttracks && data.recenttracks.track.length > 0) {
+                const currentTrack = data.recenttracks.track[0];
+                const trackName = currentTrack.name;
+                const artistName = currentTrack.artist["#text"];
+                const isNowPlaying = currentTrack["@attr"] && currentTrack["@attr"].nowplaying === "true";
+                
+                const albumArt = currentTrack.image && currentTrack.image[1] ? currentTrack.image[1]["#text"] : "";
+
+                if (trackNameEl) trackNameEl.textContent = trackName;
+                if (artistNameEl) artistNameEl.textContent = artistName;
+
+                if (albumCoverEl) {
+                    if (albumArt) {
+                        albumCoverEl.src = albumArt;
+                        albumCoverEl.classList.remove("hidden");
+                    } else {
+                        albumCoverEl.classList.add("hidden");
+                    }
+                }
+
+                if (musicStatusEl) {
+                    if (isNowPlaying) {
+                        musicStatusEl.textContent = "PLAYING";
+                        musicStatusEl.classList.add("now-playing");
+                    } else {
+                        musicStatusEl.textContent = "LAST PLAYED";
+                        musicStatusEl.classList.remove("now-playing");
+                    }
+                }
+            }
+        } catch (err) {
+            console.error("Error fetching Last.fm track:", err);
+            if (artistNameEl) artistNameEl.textContent = "Error de conexión";
+        }
+    }
+
+    // Sayfa açıldığında çek ve her 30 saniyede bir otomatik güncelle
+    fetchLastFmTrack();
+    setInterval(fetchLastFmTrack, 30000);
+
+    // --- TAB LOADER ---
     async function fetchTabComponent(tabName) {
         try {
-            // Fase 1: Animación de salida (Sutil desvanecimiento)
             container.style.opacity = "0";
             container.style.transform = "translateY(8px)";
             container.style.transition = "opacity 0.15s ease, transform 0.15s ease";
 
-            // Fase 2: Petición asíncrona al módulo correspondiente
             const response = await fetch(`tabs/${tabName}.html`);
             if (!response.ok) {
-                throw new Error(`Código de estado HTTP: ${response.status}`);
+                throw new Error(`HTTP status: ${response.status}`);
             }
             const htmlContent = await response.text();
 
-            // Fase 3: Inyección del contenido y animación de entrada
             setTimeout(() => {
                 container.innerHTML = htmlContent;
-
-                // Capturamos el elemento inyectado para forzar la activación de la animación CSS (.active-tab)
                 const targetSection = container.querySelector(".tab-section");
                 if (targetSection) {
-                    // Un pequeño truco de renderizado: forzamos lectura de offsetHeight para que el DOM registre la mutación
                     targetSection.offsetHeight; 
                     targetSection.classList.add("active-tab");
                 }
-
-                // Restauramos la opacidad del contenedor maestro
                 container.style.opacity = "1";
                 container.style.transform = "translateY(0)";
-            }, 150); // Tiempo óptimo para ocultar el switch de datos
+            }, 150);
 
         } catch (error) {
-            // Manejador de excepciones visual para depuración rápida (Fallback)
-            console.error(`Error de interconexión modular: ${error}`);
+            console.error(`Error: ${error}`);
             container.innerHTML = `
                 <section class="tab-section active-tab">
                     <header class="content-header">
@@ -51,7 +186,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     </header>
                     <article class="content-body">
                         <p>No se pudo inicializar la pestaña modular <code>tabs/${tabName}.html</code>.</p>
-                        <p>Verifica que el archivo exista en la raíz correcta y que estés ejecutando el entorno a través de un servidor local (Live Server).</p>
                     </article>
                 </section>
             `;
@@ -60,22 +194,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Configuración del Listener del menú de navegacion
     menuLinks.forEach(link => {
         link.addEventListener("click", (e) => {
             e.preventDefault();
-
             const targetTab = link.getAttribute("data-target");
-
-            // Gestión del estado activo de los botones en la interfaz lateral
             menuLinks.forEach(item => item.classList.remove("active"));
             link.classList.add("active");
-
-            // Disparar carga del módulo solicitado
             fetchTabComponent(targetTab);
         });
     });
 
-    // Carga inicial automatizada por defecto (Módulo: About)
     fetchTabComponent("about");
 });

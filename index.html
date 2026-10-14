@@ -14,9 +14,14 @@
 
     <div class="background-gif-overlay"></div>
 
+    <!-- Fullscreen GIF Overlay -->
+    <div id="gif-overlay" class="fullscreen-gif-overlay">
+        <img id="transition-gif" src="" alt="Transition GIF">
+    </div>
+
     <div class="campsite-container">
         
-        <aside class="sidebar">
+        <aside class="sidebar" data-badge="burp">
             <div class="sidebar-top">
                 <div class="sidebar-brand">
                     <h2>Fice's Space</h2>
@@ -24,43 +29,50 @@
                 
                 <nav class="menu-tabs">
                     <ul>
-                        <li><a href="#" class="menu-link active" data-target="sobre mi">About</a></li>
+                        <li><a href="#" class="menu-link active" data-target="about">About</a></li>
                         <li><a href="#" class="menu-link" data-target="cacocede">Cacocede</a></li>
                         <li><a href="#" class="menu-link" data-target="galeria">Gallery</a></li>
-<!--                    <li><a href="#" class="menu-link" data-target="timeline">Timeline</a></li> -->
-<!--                    <li><a href="#" class="menu-link" data-target="relationships">Relationships</a></li> -->
                     </ul>
                 </nav>
             </div>
             
-            <div class="music-widget-placeholder">
-                <span class="widget-icon">📻</span>
-                <p>Radio Campsite</p>
-                <span class="subtext">No se poner musica</span>
+            <!-- Last.fm Radio Widget -->
+            <div class="music-widget-placeholder" id="lastfm-widget">
+                <div class="music-widget-header">
+                    <span class="widget-radio-label" id="music-icon">RADIO</span>
+                    <span class="music-status-tag" id="music-status">OFFLINE</span>
+                </div>
+                
+                <div class="music-track-info">
+                    <img id="album-cover" class="album-cover hidden" src="" alt="Album Cover">
+                    <div class="track-text">
+                        <p id="track-name">Radio Campsite</p>
+                        <span class="subtext" id="artist-name">Cargando Last.fm...</span>
+                    </div>
+                </div>
             </div>
         </aside>
 
-        <main class="main-content">
+        <main class="main-content" data-badge="brain empty, no thoughts">
+            <!-- Çıkıntı Şeklindeki Tema Butonu -->
+            <button id="random-theme-btn" class="random-theme-btn" title="Randomize Palette">Press Me For A Suprise</button>
             
             <div id="dynamic-tab-content">
-                </div>
+            </div>
 
             <footer class="social-networks">
-                <div class="social-emoji-row">
-                    <a href="https://github.com" target="_blank" class="social-emoji-link" title="GitHub">🐙</a>
-                    <a href="https://discord.com" target="_blank" class="social-emoji-link" title="Discord">💬</a>
-                    <a href="https://spotify.com" target="_blank" class="social-emoji-link" title="Spotify">🎧</a>
-                    <a href="https://soundcloud.com" target="_blank" class="social-emoji-link" title="SoundCloud">☁️</a>
-                    <a href="https://instagram.com" target="_blank" class="social-emoji-link" title="Instagram">📸</a>
-                    <a href="https://youtube.com" target="_blank" class="social-emoji-link" title="YouTube">📺</a>
-                    <a href="https://linkedin.com" target="_blank" class="social-emoji-link" title="LinkedIn">💼</a>
-                    <a href="https://twitter.com" target="_blank" class="social-emoji-link" title="Twitter / X">🐦</a>
-                    <a href="mailto:tu-correo@example.com" class="social-emoji-link" title="Correo Electrónico">📬</a>
-                    <a href="https://twitch.tv" target="_blank" class="social-emoji-link" title="Twitch">👾</a>
-                    <a href="#" class="social-emoji-link" title="Portafolio / CV">📝</a>
-                    <a href="https://www.udea.edu.co" target="_blank" class="social-emoji-link" title="Universidad de Antioquia">🎓</a>
-                </div>
-            </footer>
+    <div class="social-badges-row">
+        <a href="https://youtube.com/@fice64" target="_blank" class="social-badge-link" title="YouTube">
+            <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube">
+        </a>
+        <a href="https://twitch.tv/fice64" target="_blank" class="social-badge-link" title="Twitch">
+            <img src="https://img.shields.io/badge/Twitch-9146FF?style=for-the-badge&logo=twitch&logoColor=white" alt="Twitch">
+        </a>
+        <a href="https://instagram.com/fice_64" target="_blank" class="social-badge-link" title="Instagram">
+            <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram">
+        </a>
+    </div>
+</footer>
         </main>
 
     </div>
