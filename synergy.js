@@ -48,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (mainContent) mainContent.setAttribute("data-badge", getRandomItem(rightSplashPool));
     }
 
-    // İlk splash metinlerini yükle
     randomizeBadges();
 
     // --- PALETTE RANDOMIZER & TRANSITION GIF LOGIC ---
@@ -148,9 +147,45 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Sayfa açıldığında çek ve her 30 saniyede bir otomatik güncelle
     fetchLastFmTrack();
     setInterval(fetchLastFmTrack, 30000);
+
+    // --- FARD EASTER EGG ---
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let konamiIndex = 0;
+
+    const konamiOverlay = document.getElementById("konami-overlay");
+    const closeKonamiBtn = document.getElementById("close-konami-btn");
+    const secretSound = new Audio("https://cdn.freesound.org/previews/274/274178_5123851-lq.mp3");
+
+    function triggerKonamiSecret() {
+        if (konamiOverlay) {
+            konamiOverlay.classList.add("active");
+            secretSound.currentTime = 0;
+            secretSound.play().catch(e => console.log("Audio playback blocked:", e));
+        }
+    }
+
+    document.addEventListener("keydown", (e) => {
+        const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+        const expectedKey = konamiCode[konamiIndex].length === 1 ? konamiCode[konamiIndex].toLowerCase() : konamiCode[konamiIndex];
+
+        if (key === expectedKey) {
+            konamiIndex++;
+            if (konamiIndex === konamiCode.length) {
+                triggerKonamiSecret();
+                konamiIndex = 0;
+            }
+        } else {
+            konamiIndex = 0;
+        }
+    });
+
+    if (closeKonamiBtn && konamiOverlay) {
+        closeKonamiBtn.addEventListener("click", () => {
+            konamiOverlay.classList.remove("active");
+        });
+    }
 
     // --- TAB LOADER ---
     async function fetchTabComponent(tabName) {
