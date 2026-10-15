@@ -51,8 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     randomizeBadges();
 
     // --- PALETTE RANDOMIZER & TRANSITION GIF LOGIC ---
-    const GIF_URL = "https://cdn.discordapp.com/attachments/1090677133342416966/1555762551583674488/image0.gif?ex=6ad0dd88&is=6acf8c08&hm=735b213c4c6d75644e10887f2eb6f90c7ebd3d4ee6821334fdbf0b9239d5d189";
-
+    const GIF_URL = "resources/kronked.gif";
     const randomBtn = document.getElementById("random-theme-btn");
     const gifOverlay = document.getElementById("gif-overlay");
     const gifImg = document.getElementById("transition-gif");
@@ -81,7 +80,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (randomBtn && gifOverlay && gifImg) {
         randomBtn.addEventListener("click", () => {
-            gifImg.src = `${GIF_URL}&t=${Date.now()}`;
+            if (window.location.protocol === "file:") {
+                gifImg.src = GIF_URL;
+            } else {
+                gifImg.src = `${GIF_URL}?t=${Date.now()}`;
+            }
+
             gifOverlay.classList.add("active");
 
             setTimeout(() => {
